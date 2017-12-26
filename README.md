@@ -1,13 +1,13 @@
 # station_count
 
 ## env preparation
-'''
+
 virtualenv venpd
 cd venpd
 source ./bin/activate #Linux or
   cd scripts & activate #Windows
 pip install pandas
-'''
+
 ## run data cleaning and analysis
 save csv files under /csv and mind the path in station_count.py
 copy .csv and rename as ana.csv
