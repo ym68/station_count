@@ -1,13 +1,12 @@
 #!/usr/bin/python
 # coding:utf-8
 
-
 import pandas as pd
-import sys
 
-data = pd.read_csv('/home/mzg/Documents/csv/ana.csv',skiprows=5)
 
-data_c = data[(data['Status'] == 'connected')]  #connected
+data = pd.read_csv('ana_cleaned.csv',skiprows=0)
+
+data_c = data  #connected
 
 
 count_Station = data_c['Station '].value_counts()  #quantity of each station(MP, customer)
@@ -47,7 +46,7 @@ for SSID in SSIDs:
     if SSID == '':
         pass
     else:
-        data_SSID = data[(data['Status'] == 'connected') & (data['SSID'] == SSID)] ## conected under certain AP MAC
+        data_SSID = data[(data['SSID'] == SSID)] ## conected under certain AP MAC
         count_SSIDStation = data_SSID['Station '].value_counts()  #quantity of each station(MP, customer) under certain AP MAC
         SSID_Station_No = len(count_SSIDStation) # duplicate removed
         SSID_Total_Connection = len(data_SSID)
@@ -72,7 +71,7 @@ for AP in APs:
     if AP == '':
         pass
     else:
-        data_cap = data[(data['Status'] == 'connected') & (data['AP MAC'] == AP)] ## conected under certain AP MAC
+        data_cap = data[(data['AP MAC'] == AP)] ## conected under certain AP MAC
         count_apStation = data_cap['Station '].value_counts()  #quantity of each station(MP, customer) under certain AP MAC
         AP_Station_No = len(count_apStation) # duplicate removed
         AP_Total_Connection = len(data_cap)
@@ -80,5 +79,6 @@ for AP in APs:
         rows = [(Time_Start,Time_End,Total_Connection,Total_Station_No, AP,AP_Total_Connection,AP_Station_No)]
         df = pd.DataFrame(data=list(rows),columns=('时间始于', '时间截止于', '总计连接次数','总计连接终端数', 'AP MAC', 'AP的总计连接次数','AP总计连接终端数'))
         df.to_csv('sum.csv',mode='a', header=True)
+
 
 
